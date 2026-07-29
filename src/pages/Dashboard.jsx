@@ -1,35 +1,47 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
 
 const NAV_CARDS = [
-  { label: "Manage Books", to: "/admin/books", icon: "" },
-  { label: "Manage Authors", to: "/admin/authors", icon: "" },
-  { label: "Manage Categories", to: "/admin/categories", icon: "" },
-  { label: "Borrow Records", to: "/admin/borrows", icon: "" },
-  { label: "Manage Users", to: "/admin/users", icon: "" },
+  { label: "Manage Books", to: "/admin/books", icon: "📚" },
+  { label: "Manage Authors", to: "/admin/authors", icon: "✍️" },
+  { label: "Manage Categories", to: "/admin/categories", icon: "🗂️" },
+  { label: "Borrow Records", to: "/admin/borrows", icon: "📋" },
+  { label: "Manage Users", to: "/admin/users", icon: "👥" },
 ];
 
 export default function Dashboard() {
+  const { user } = useAuth();
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api.get("/dashboard/stats")
-      .then((res) => setStats(res.data))
-      .catch(() => setError("Failed to load statistics."))
+    api
+      .get("/dashboard/stats")
+      .then((res) => {
+        if (res.data && typeof res.data === "object") {
+          setStats(res.data);
+        } else {
+          setError("Invalid data received from server.");
+        }
+      })
+      .catch(() => setError("Failed to load statistics. Please refresh."))
       .finally(() => setLoading(false));
   }, []);
 
   return (
     <div className="container py-4">
-      <h3 className="mb-4">Admin Dashboard</h3>
+      <h3 className="mb-1">Admin Dashboard</h3>
+      {user?.username && (
+        <p className="text-muted mb-4">Welcome, {user.username}</p>
+      )}
 
-      {/* Stats Cards */}
+      <h5 className="mb-3">Statistics</h5>
       <div className="row g-3 mb-5">
         {loading ? (
-          <p className="text-muted">Loading stats...</p>
+          <p className="text-muted">Loading statistics...</p>
         ) : error ? (
           <p className="text-danger">{error}</p>
         ) : stats ? (
@@ -44,7 +56,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Quick Action Nav Cards */}
       <h5 className="mb-3">Quick Actions</h5>
       <div className="row g-3">
         {NAV_CARDS.map((card) => (
@@ -52,7 +63,7 @@ export default function Dashboard() {
             <Link to={card.to} className="text-decoration-none">
               <div className="card text-center p-3 h-100 shadow-sm">
                 <div style={{ fontSize: "2rem" }}>{card.icon}</div>
-                <p className="mt-2 mb-0 fw-semibold">{card.label}</p>
+                <p className="mt-2 mb-0 fw-semibold text-dark">{card.label}</p>
               </div>
             </Link>
           </div>
