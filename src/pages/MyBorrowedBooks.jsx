@@ -128,7 +128,6 @@ export default function MyBorrowedBooks() {
     </div>
   );
 }
-*/
 
 export default function MyBorrowedBooks() {
   return <div className="container py-4"><h2>My Borrowed Books</h2></div>;
