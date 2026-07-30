@@ -54,6 +54,24 @@ export default function Navbar() {
                     {user.username}
                   </span>
                 </li>
+                <li className="nav-item">
+                 <Link
+                   className="nav-link"
+                   to="/borrow-books"
+                   onClick={() => setOpen(false)}
+                >
+                   Borrow Books
+                 </Link>
+               </li>
+                <li className="nav-item">
+                <Link
+                  className="nav-link"
+                  to="/my-borrowed-books"
+                  onClick={() => setOpen(false)}
+                >
+                   My Borrowed Books
+                  </Link>
+                  </li>
                 {user.role === "admin" && (
                   <li className="nav-item">
                     <Link
