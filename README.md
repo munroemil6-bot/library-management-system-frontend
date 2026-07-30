@@ -286,7 +286,7 @@ Deploy using
 Clone repository
 
 ```
-git clone <repository-url>
+git clone https://github.com/munroemil6-bot/library-management-system-frontend.git
 ```
 
 Install dependencies
