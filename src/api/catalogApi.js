@@ -15,4 +15,5 @@ export const deleteAuthor = (id) => api.delete(`/authors/${id}`);
 
 export const fetchCategories = () => api.get("/categories");
 export const createCategory = (data) => api.post("/categories", data);
+export const updateCategory = (id, data) => api.patch(`/categories/${id}`, data);
 export const deleteCategory = (id) => api.delete(`/categories/${id}`);

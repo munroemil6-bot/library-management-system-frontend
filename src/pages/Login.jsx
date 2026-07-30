@@ -45,7 +45,9 @@ export default function Login() {
         setServerError("Unexpected response from server. Please try again.");
         return;
       }
-      login(userData, localStorage.getItem("token"));
+
+      const token = userData?.token || userData?.access_token || userData?.auth_token || null;
+      login(userData, token);
       navigate(userData.role === "admin" ? "/dashboard" : "/profile");
     } catch (err) {
       setServerError(

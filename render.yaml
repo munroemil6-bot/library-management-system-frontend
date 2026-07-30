@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: library-management-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        value: https://library-management-system-backend-91dw.onrender.com/api

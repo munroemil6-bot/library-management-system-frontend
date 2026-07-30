@@ -1,23 +1,24 @@
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
-
 # BookBarn Frontend
+
+## Render deployment
+
+This frontend is prepared for deployment as a Render static site.
+
+### Render settings
+- Build Command: `npm install && npm run build`
+- Publish Directory: `dist`
+- SPA routing is handled by the rewrite rule in `render.yaml`
+
+### Environment variable
+- `VITE_API_URL=https://library-management-system-backend-91dw.onrender.com/api`
+
+### Deployment steps
+1. Push this repository to GitHub.
+2. In Render, create a new Static Site connected to this repository.
+3. Set the build command and publish directory as above.
+4. Deploy.
+
+---
 
 ## Overview
 

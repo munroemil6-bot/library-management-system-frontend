@@ -14,6 +14,7 @@ export default function BorrowBooks() {
   const [records, setRecords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [borrowingId, setBorrowingId] = useState(null);
+  const [returningId, setReturningId] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -41,13 +42,15 @@ export default function BorrowBooks() {
   };
 
   const getDisplayStatus = (record) => {
-    if (record.status === "returned") return "returned";
+    if (record.status === "returned" || record.return_date) return "returned";
     if (record.due_date && new Date(record.due_date) < new Date()) return "overdue";
     return "borrowed";
   };
 
+  const isActiveBorrow = (record) => record.status === "borrowed" || (!record.return_date && record.status !== "returned");
+
   const isBorrowedByMe = (bookId) =>
-    records.some((record) => record.book_id === bookId && record.status === "borrowed");
+    records.some((record) => record.book_id === bookId && isActiveBorrow(record));
 
   const handleBorrow = async (bookId) => {
     setBorrowingId(bookId);
@@ -61,6 +64,21 @@ export default function BorrowBooks() {
       setError(err.response?.data?.error || "Failed to borrow book.");
     } finally {
       setBorrowingId(null);
+    }
+  };
+
+  const handleReturn = async (recordId) => {
+    setReturningId(recordId);
+    setError("");
+    setSuccess("");
+    try {
+      await api.patch(`/borrow/${recordId}`);
+      setSuccess("Book returned successfully.");
+      await fetchData();
+    } catch (err) {
+      setError(err.response?.data?.error || "Failed to return book.");
+    } finally {
+      setReturningId(null);
     }
   };
 
@@ -169,12 +187,13 @@ export default function BorrowBooks() {
                   <th className="py-3 fw-semibold small" style={{ color: "#64748b" }}>Due</th>
                   <th className="py-3 fw-semibold small" style={{ color: "#64748b" }}>Returned</th>
                   <th className="py-3 fw-semibold small" style={{ color: "#64748b" }}>Status</th>
+                  {!isAdmin && <th className="py-3" />}
                 </tr>
               </thead>
               <tbody>
                 {records.length === 0 ? (
                   <tr>
-                    <td className="px-4 py-4 text-muted" colSpan="5">
+                    <td className="px-4 py-4 text-muted" colSpan={!isAdmin ? 6 : 5}>
                       {isAdmin ? "No borrow records yet." : "You have no active or past borrow records yet."}
                     </td>
                   </tr>
@@ -204,6 +223,21 @@ export default function BorrowBooks() {
                             {displayStatus}
                           </span>
                         </td>
+                        {!isAdmin && (
+                          <td className="py-3 pe-4">
+                            {isActiveBorrow(record) && (
+                              <button
+                                type="button"
+                                className="btn btn-sm fw-medium"
+                                style={{ background: "#eff6ff", color: "#2563eb", border: "none", borderRadius: "0.5rem" }}
+                                disabled={returningId === record.id}
+                                onClick={() => handleReturn(record.id)}
+                              >
+                                {returningId === record.id ? "Returning..." : "Return"}
+                              </button>
+                            )}
+                          </td>
+                        )}
                       </tr>
                     );
                   })

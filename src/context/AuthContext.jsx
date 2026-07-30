@@ -28,8 +28,10 @@ export function AuthProvider({ children }) {
   const login = useCallback((userData, token = null) => {
     if (!userData?.id) return;
 
-    if (token) {
-      localStorage.setItem("token", token);
+    const resolvedToken = token ?? userData?.token ?? userData?.access_token ?? userData?.auth_token ?? null;
+
+    if (resolvedToken) {
+      localStorage.setItem("token", resolvedToken);
     } else {
       localStorage.removeItem("token");
     }
