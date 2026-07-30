@@ -1,12 +1,13 @@
 import axios from "axios";
 
-const baseURL = (import.meta.env.VITE_API_URL || "https://library-management-system-backend-91dw.onrender.com/api").replace(/\/$/, "");
+const fallbackBaseURL = "https://library-management-system-backend-91dw.onrender.com/api";
+const baseURL = (import.meta.env.VITE_API_URL || fallbackBaseURL).replace(/\/$/, "");
 
 const api = axios.create({
   baseURL,
   withCredentials: true,
   headers: { "Content-Type": "application/json" },
-  timeout: 15000,
+  timeout: 20000,
 });
 
 api.interceptors.request.use((config) => {
