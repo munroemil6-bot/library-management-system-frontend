@@ -20,3 +20,7 @@ GET /borrow
 
 ==========================================================
 */
+
+export default function BorrowBooks() {
+  return <div className="container py-4"><h2>Borrow Books</h2></div>;
+}

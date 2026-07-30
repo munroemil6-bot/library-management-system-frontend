@@ -8,6 +8,11 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
+import Books from "./pages/Books";
+import Authors from "./pages/Authors";
+import Categories from "./pages/Categories";
+import BorrowBooks from "./pages/BorrowBooks";
+import MyBorrowedBooks from "./pages/MyBorrowedBooks";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -33,12 +38,54 @@ export default function App() {
                 }
               />
 
+              {/* Protected — any logged-in user */}
+              <Route
+                path="/books"
+                element={
+                  <ProtectedRoute>
+                    <Books />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/borrow"
+                element={
+                  <ProtectedRoute>
+                    <BorrowBooks />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-borrowed"
+                element={
+                  <ProtectedRoute>
+                    <MyBorrowedBooks />
+                  </ProtectedRoute>
+                }
+              />
+
               {/* Protected — admin only */}
               <Route
                 path="/dashboard"
                 element={
                   <ProtectedRoute adminOnly>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/authors"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <Authors />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/categories"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <Categories />
                   </ProtectedRoute>
                 }
               />
