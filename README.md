@@ -181,7 +181,7 @@ Install packages
 ```
 npm install react-router-dom
 npm install axios
-npm install bootstrap
+npm install bootsrap
 ```
 
 Create folder structure.
