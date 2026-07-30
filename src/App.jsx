@@ -9,6 +9,8 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
+import BorrowBooks from "./pages/BorrowBooks";
+import MyBorrowedBooks from "./pages/MyBorrowedBooks";
 
 export default function App() {
   return (
@@ -22,7 +24,7 @@ export default function App() {
               <Route path="/" element={<Navigate to="/login" replace />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-
+              
               {/* Protected — any logged-in user */}
               <Route
                 path="/profile"
@@ -32,6 +34,22 @@ export default function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/borrow-books"
+                element={
+                  <ProtectedRoute>
+                    <BorrowBooks />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-borrowed-books"
+                element={
+                  <ProtectedRoute>
+                    <MyBorrowedBooks />
+                  </ProtectedRoute>
+                }
+             />
 
               {/* Protected — admin only */}
               <Route
