@@ -39,7 +39,6 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <AdminLayout>
       <div className="p-4" style={{ maxWidth: 1100 }}>
 
         {/* Header */}
@@ -126,5 +125,5 @@ export default function Dashboard() {
         </div>
 
       </div>
-  );
+    );
 }

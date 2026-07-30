@@ -86,7 +86,6 @@ export default function Profile() {
   if (loading) return <Loader message="Saving changes..." />;
 
   return (
-    <UserLayout>
       <div className="p-4" style={{ maxWidth: 680 }}>
 
         {/* Profile header */}

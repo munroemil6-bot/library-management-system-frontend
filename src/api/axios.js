@@ -1,31 +1,38 @@
 import axios from "axios";
 
+const baseURL = (import.meta.env.VITE_API_URL || "https://library-management-system-backend-91dw.onrender.com/api").replace(/\/$/, "");
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
-  headers: { "Content-Type": "application/json" },
+  baseURL,
   withCredentials: true,
-  timeout: 15000, // 15s timeout — prevents hanging requests
-    baseURL: import.meta.env.VITE_API_URL || "https://library-management-system-backend-91dw.onrender.com/api",
-    withCredentials: true,
-    headers: {
-        "Content-Type": "application/json",
-    },
+  headers: { "Content-Type": "application/json" },
+  timeout: 15000,
 });
 
-// Response interceptor — handle session expiry and network failures globally
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization;
+  }
+
+  return config;
+});
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
-      // Network error or server down — return friendly message
       return Promise.reject({
         response: { data: { error: "Network error. Please check your connection." } },
       });
     }
 
     if (error.response.status === 401) {
-      // Session expired — clear local user and redirect to login
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       if (!window.location.pathname.includes("/login")) {
         window.location.href = "/login";
       }
