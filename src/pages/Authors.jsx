@@ -22,3 +22,7 @@ DELETE /authors/:id
 
 ==========================================================
 */
+
+export default function Authors() {
+  return <div className="container py-4"><h2>Authors</h2></div>;
+}

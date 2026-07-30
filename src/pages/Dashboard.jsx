@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
+import Loader from "../components/Loader";
+import AdminLayout from "../layouts/AdminLayout";
 
 const NAV_CARDS = [
   { label: "Manage Books", to: "/admin/books", description: "Add, edit or remove books" },
@@ -41,8 +43,8 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-vh-100 bg-light py-4">
-      <div className="container">
+    <AdminLayout>
+      <div className="container-fluid">
 
         {/* Page Header */}
         <div className="mb-4">
@@ -58,16 +60,7 @@ export default function Dashboard() {
         <div className="mb-5">
           <h5 className="fw-semibold text-dark mb-3">System Statistics</h5>
 
-          {loading && (
-            <div className="d-flex align-items-center gap-2 text-muted">
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              />
-              <span>Loading statistics...</span>
-            </div>
-          )}
+          {loading && <Loader message="Loading statistics..." />}
 
           {!loading && error && (
             <div className="alert alert-warning d-flex align-items-center" role="alert">
@@ -127,6 +120,6 @@ export default function Dashboard() {
         </div>
 
       </div>
-    </div>
+    </AdminLayout>
   );
 }

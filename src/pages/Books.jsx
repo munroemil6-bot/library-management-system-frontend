@@ -24,3 +24,7 @@ DELETE /books/:id
 
 ==========================================================
 */
+
+export default function Books() {
+  return <div className="container py-4"><h2>Books</h2></div>;
+}
