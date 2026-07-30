@@ -5,12 +5,7 @@ import api from "../api/axios";
 export default function Register() {
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    pwd: "",
-    confirmPwd: "",
-  });
+  const [form, setForm] = useState({ username: "", email: "", pwd: "", confirmPwd: "" });
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,10 +44,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const errs = validate();
-    if (Object.keys(errs).length) {
-      setErrors(errs);
-      return;
-    }
+    if (Object.keys(errs).length) { setErrors(errs); return; }
 
     setLoading(true);
     try {
@@ -60,6 +52,7 @@ export default function Register() {
         username: form.username.trim(),
         email: form.email.trim(),
         password: form.pwd,
+        password_confirmation: form.confirmPwd,
       });
       navigate("/login");
     } catch (err) {
@@ -75,143 +68,147 @@ export default function Register() {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light py-5">
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-sm-10 col-md-7 col-lg-5">
-            <div className="card border-0 shadow-sm rounded-3">
-              <div className="card-body p-4 p-md-5">
+    <div className="d-flex" style={{ minHeight: "calc(100vh - 56px)" }}>
 
-                <div className="text-center mb-4">
-                  <h2 className="fw-bold text-dark mb-1">Create Account</h2>
-                  <p className="text-muted small">Join BookBarn today</p>
-                </div>
-
-                {serverError && (
-                  <div className="alert alert-danger alert-dismissible" role="alert">
-                    {serverError}
-                    <button
-                      type="button"
-                      className="btn-close"
-                      onClick={() => setServerError("")}
-                      aria-label="Close"
-                    />
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} noValidate>
-                  <div className="mb-3">
-                    <label htmlFor="reg-username" className="form-label fw-medium">
-                      Username
-                    </label>
-                    <input
-                      id="reg-username"
-                      type="text"
-                      name="username"
-                      className={`form-control form-control-lg ${errors.username ? "is-invalid" : ""}`}
-                      placeholder="Choose a username"
-                      value={form.username}
-                      onChange={handleChange}
-                      autoComplete="username"
-                      disabled={loading}
-                    />
-                    {errors.username && (
-                      <div className="invalid-feedback">{errors.username}</div>
-                    )}
-                  </div>
-
-                  <div className="mb-3">
-                    <label htmlFor="reg-email" className="form-label fw-medium">
-                      Email Address
-                    </label>
-                    <input
-                      id="reg-email"
-                      type="email"
-                      name="email"
-                      className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
-                      placeholder="you@example.com"
-                      value={form.email}
-                      onChange={handleChange}
-                      autoComplete="email"
-                      disabled={loading}
-                    />
-                    {errors.email && (
-                      <div className="invalid-feedback">{errors.email}</div>
-                    )}
-                  </div>
-
-                  <div className="mb-3">
-                    <label htmlFor="reg-pwd" className="form-label fw-medium">
-                      Password
-                    </label>
-                    <input
-                      id="reg-pwd"
-                      type="password"
-                      name="pwd"
-                      className={`form-control form-control-lg ${errors.pwd ? "is-invalid" : ""}`}
-                      placeholder="Minimum 8 characters"
-                      value={form.pwd}
-                      onChange={handleChange}
-                      autoComplete="new-password"
-                      disabled={loading}
-                    />
-                    {errors.pwd && (
-                      <div className="invalid-feedback">{errors.pwd}</div>
-                    )}
-                  </div>
-
-                  <div className="mb-4">
-                    <label htmlFor="reg-confirm-pwd" className="form-label fw-medium">
-                      Confirm Password
-                    </label>
-                    <input
-                      id="reg-confirm-pwd"
-                      type="password"
-                      name="confirmPwd"
-                      className={`form-control form-control-lg ${errors.confirmPwd ? "is-invalid" : ""}`}
-                      placeholder="Re-enter your password"
-                      value={form.confirmPwd}
-                      onChange={handleChange}
-                      autoComplete="new-password"
-                      disabled={loading}
-                    />
-                    {errors.confirmPwd && (
-                      <div className="invalid-feedback">{errors.confirmPwd}</div>
-                    )}
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-lg w-100"
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      <>
-                        <span
-                          className="spinner-border spinner-border-sm me-2"
-                          role="status"
-                          aria-hidden="true"
-                        />
-                        Creating account...
-                      </>
-                    ) : (
-                      "Create Account"
-                    )}
-                  </button>
-                </form>
-
-                <hr className="my-4" />
-
-                <p className="text-center text-muted mb-0 small">
-                  Already have an account?{" "}
-                  <Link to="/login" className="text-primary fw-medium text-decoration-none">
-                    Sign in
-                  </Link>
-                </p>
-
-              </div>
-            </div>
+      {/* Left panel */}
+      <div
+        className="d-none d-lg-flex flex-column justify-content-center align-items-start p-5"
+        style={{
+          width: "45%",
+          background: "linear-gradient(145deg, #1e293b 0%, #1e3a5f 60%, #1d4ed8 100%)",
+          color: "#fff",
+        }}
+      >
+        <div style={{ maxWidth: 360 }}>
+          <div
+            className="mb-4 d-flex align-items-center justify-content-center rounded-3"
+            style={{ width: 56, height: 56, background: "rgba(255,255,255,0.1)", fontSize: "1.5rem" }}
+          >
+            <i className="bi bi-person-plus" />
           </div>
+          <h1 className="fw-bold mb-3" style={{ fontSize: "2rem", lineHeight: 1.2 }}>
+            Join BookBarn<br />today.
+          </h1>
+          <p style={{ color: "#94a3b8", lineHeight: 1.7 }}>
+            Create your free account and start exploring our library collection.
+          </p>
+          <div className="mt-4 d-flex flex-column gap-2">
+            {["Free to join", "Borrow books instantly", "Track your reading history"].map((t) => (
+              <div key={t} className="d-flex align-items-center gap-2" style={{ color: "#cbd5e1" }}>
+                <i className="bi bi-check-circle-fill" style={{ color: "#22c55e", fontSize: "0.9rem" }} />
+                <span className="small">{t}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Right panel */}
+      <div
+        className="flex-grow-1 d-flex align-items-center justify-content-center p-4"
+        style={{ background: "#f0f2f5" }}
+      >
+        <div style={{ width: "100%", maxWidth: 420 }}>
+          <div className="mb-4">
+            <h2 className="fw-bold mb-1" style={{ color: "#1e293b" }}>Create account</h2>
+            <p className="text-muted small mb-0">Fill in your details to get started</p>
+          </div>
+
+          {serverError && (
+            <div className="alert alert-danger alert-dismissible py-2 small" role="alert">
+              {serverError}
+              <button type="button" className="btn-close" onClick={() => setServerError("")} aria-label="Close" />
+            </div>
+          )}
+
+          <div className="card form-card p-4">
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="mb-3">
+                <label htmlFor="reg-username" className="form-label fw-medium small">Username</label>
+                <input
+                  id="reg-username"
+                  type="text"
+                  name="username"
+                  className={`form-control form-control-lg ${errors.username ? "is-invalid" : ""}`}
+                  placeholder="Choose a username"
+                  value={form.username}
+                  onChange={handleChange}
+                  autoComplete="username"
+                  disabled={loading}
+                />
+                {errors.username && <div className="invalid-feedback">{errors.username}</div>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="reg-email" className="form-label fw-medium small">Email Address</label>
+                <input
+                  id="reg-email"
+                  type="email"
+                  name="email"
+                  className={`form-control form-control-lg ${errors.email ? "is-invalid" : ""}`}
+                  placeholder="you@example.com"
+                  value={form.email}
+                  onChange={handleChange}
+                  autoComplete="email"
+                  disabled={loading}
+                />
+                {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="reg-pwd" className="form-label fw-medium small">Password</label>
+                <input
+                  id="reg-pwd"
+                  type="password"
+                  name="pwd"
+                  className={`form-control form-control-lg ${errors.pwd ? "is-invalid" : ""}`}
+                  placeholder="Minimum 8 characters"
+                  value={form.pwd}
+                  onChange={handleChange}
+                  autoComplete="new-password"
+                  disabled={loading}
+                />
+                {errors.pwd && <div className="invalid-feedback">{errors.pwd}</div>}
+              </div>
+
+              <div className="mb-4">
+                <label htmlFor="reg-confirm-pwd" className="form-label fw-medium small">Confirm Password</label>
+                <input
+                  id="reg-confirm-pwd"
+                  type="password"
+                  name="confirmPwd"
+                  className={`form-control form-control-lg ${errors.confirmPwd ? "is-invalid" : ""}`}
+                  placeholder="Re-enter your password"
+                  value={form.confirmPwd}
+                  onChange={handleChange}
+                  autoComplete="new-password"
+                  disabled={loading}
+                />
+                {errors.confirmPwd && <div className="invalid-feedback">{errors.confirmPwd}</div>}
+              </div>
+
+              <button
+                type="submit"
+                className="btn btn-lg w-100 fw-semibold"
+                style={{ background: "#2563eb", color: "#fff", borderRadius: "0.625rem" }}
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true" />
+                    Creating account...
+                  </>
+                ) : "Create Account"}
+              </button>
+            </form>
+          </div>
+
+          <p className="text-center text-muted small mt-3 mb-0">
+            Already have an account?{" "}
+            <Link to="/login" className="fw-semibold text-decoration-none" style={{ color: "#2563eb" }}>
+              Sign in
+            </Link>
+          </p>
         </div>
       </div>
     </div>
