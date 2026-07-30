@@ -44,6 +44,7 @@ export default function Register() {
         username: form.username,
         email: form.email,
         password: form.pwd,
+        password_confirmation: form.confirmPwd,
       });
       navigate("/login");
     } catch (err) {
@@ -51,7 +52,7 @@ export default function Register() {
       if (data?.errors && typeof data.errors === "object") {
         setErrors(data.errors);
       } else {
-        setServerError(data?.message || "Registration failed. Please try again.");
+        setServerError(data?.message || data?.error || "Registration failed. Please try again.");
       }
     } finally {
       setLoading(false);

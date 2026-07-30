@@ -107,5 +107,3 @@ export default function BorrowBooks() {
     </div>
   );
 }
-
-export default BorrowBooks;

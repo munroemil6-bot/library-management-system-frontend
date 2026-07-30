@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import AdminLayout from "./layouts/AdminLayout";
+import UserLayout from "./layouts/UserLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
@@ -13,8 +15,29 @@ import Categories from "./pages/Categories";
 import BorrowBooks from "./pages/BorrowBooks";
 import MyBorrowedBooks from "./pages/MyBorrowedBooks";
 import NotFound from "./pages/NotFound";
-import BorrowBooks from "./pages/BorrowBooks";
-import MyBorrowedBooks from "./pages/MyBorrowedBooks";
+
+function AppShell({ children }) {
+  const { user } = useAuth();
+  const Layout = user?.role === "admin" ? AdminLayout : UserLayout;
+  return <Layout>{children}</Layout>;
+}
+
+function HomeRedirect() {
+  const { user } = useAuth();
+
+  if (!user) return <Navigate to="/login" replace />;
+  return <Navigate to={user.role === "admin" ? "/dashboard" : "/profile"} replace />;
+}
+
+function PublicRoute({ children }) {
+  const { user } = useAuth();
+
+  if (user) {
+    return <Navigate to={user.role === "admin" ? "/dashboard" : "/profile"} replace />;
+  }
+
+  return children;
+}
 
 export default function App() {
   return (
@@ -25,16 +48,18 @@ export default function App() {
           <main className="flex-grow-1">
             <Routes>
               {/* Public */}
-              <Route path="/" element={<Navigate to="/login" replace />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/" element={<HomeRedirect />} />
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
               
               {/* Protected — any logged-in user */}
               <Route
                 path="/profile"
                 element={
                   <ProtectedRoute>
-                    <Profile />
+                    <AppShell>
+                      <Profile />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />
@@ -42,7 +67,9 @@ export default function App() {
                 path="/borrow-books"
                 element={
                   <ProtectedRoute>
-                    <BorrowBooks />
+                    <AppShell>
+                      <BorrowBooks />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />
@@ -50,7 +77,9 @@ export default function App() {
                 path="/my-borrowed-books"
                 element={
                   <ProtectedRoute>
-                    <MyBorrowedBooks />
+                    <AppShell>
+                      <MyBorrowedBooks />
+                    </AppShell>
                   </ProtectedRoute>
                 }
              />
@@ -60,7 +89,9 @@ export default function App() {
                 path="/books"
                 element={
                   <ProtectedRoute>
-                    <Books />
+                    <AppShell>
+                      <Books />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />
@@ -68,7 +99,9 @@ export default function App() {
                 path="/borrow"
                 element={
                   <ProtectedRoute>
-                    <BorrowBooks />
+                    <AppShell>
+                      <BorrowBooks />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />
@@ -76,7 +109,9 @@ export default function App() {
                 path="/my-borrowed"
                 element={
                   <ProtectedRoute>
-                    <MyBorrowedBooks />
+                    <AppShell>
+                      <MyBorrowedBooks />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />
@@ -86,7 +121,9 @@ export default function App() {
                 path="/dashboard"
                 element={
                   <ProtectedRoute adminOnly>
-                    <Dashboard />
+                    <AppShell>
+                      <Dashboard />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />
@@ -94,7 +131,9 @@ export default function App() {
                 path="/authors"
                 element={
                   <ProtectedRoute adminOnly>
-                    <Authors />
+                    <AppShell>
+                      <Authors />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />
@@ -102,7 +141,9 @@ export default function App() {
                 path="/categories"
                 element={
                   <ProtectedRoute adminOnly>
-                    <Categories />
+                    <AppShell>
+                      <Categories />
+                    </AppShell>
                   </ProtectedRoute>
                 }
               />

@@ -1,28 +1,3 @@
-
-/*
-==========================================================
-MEMBER 2 — NAOMI
-
-PAGE
-
-CATEGORIES
-
-Responsibilities
-
-• Display categories
-• Add categories
-• Edit categories
-• Delete categories
-
-Backend Routes
-
-GET /categories
-POST /categories
-PATCH /categories/:id
-DELETE /categories/:id
-
-==========================================================
-*/
 import React, { useEffect, useState } from 'react';
 import { fetchCategories, createCategory, deleteCategory } from '../api/catalogApi';
 
@@ -89,7 +64,4 @@ export default function Categories() {
       </ul>
     </div>
   );
-}
-export default function Categories() {
-  return <div className="container py-4"><h2>Categories</h2></div>;
 }

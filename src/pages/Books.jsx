@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { 
   fetchBooks, 
   createBook, 
@@ -10,13 +11,14 @@ import {
   fetchCategories 
 } from '../api/catalogApi';
 
-export default function Books({ currentUser }) {
+export default function Books() {
+  const { user } = useAuth();
   const [books, setBooks] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState('');
 
-  const isAdmin = currentUser?.role === 'admin';
+  const isAdmin = user?.role === 'admin';
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBookId, setEditingBookId] = useState(null);
@@ -298,34 +300,4 @@ export default function Books({ currentUser }) {
       )}
     </div>
   );
-}/*
-
-==========================================================
-MEMBER 2 — NAOMI
-
-PAGE
-
-BOOKS
-
-Responsibilities
-
-• Display all books
-• Search books
-• View book details
-• Add books (Admin)
-• Edit books (Admin)
-• Delete books (Admin)
-
-Backend Routes
-
-GET /books
-POST /books
-PATCH /books/:id
-DELETE /books/:id
-
-==========================================================
-*/
-
-export default function Books() {
-  return <div className="container py-4"><h2>Books</h2></div>;
 }

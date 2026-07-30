@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
 import Loader from "../components/Loader";
-import AdminLayout from "../layouts/AdminLayout";
 
 const NAV_CARDS = [
   { label: "Manage Books", to: "/admin/books", description: "Add, edit or remove books" },
@@ -43,7 +42,6 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <AdminLayout>
       <div className="container-fluid">
 
         {/* Page Header */}
@@ -120,6 +118,5 @@ export default function Dashboard() {
         </div>
 
       </div>
-    </AdminLayout>
   );
 }

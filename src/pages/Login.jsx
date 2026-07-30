@@ -46,10 +46,10 @@ export default function Login() {
         password: form.pwd,
       });
 
-      const userData = res.data?.user;
-      const token = res.data?.token;
+      const userData = res.data?.user || res.data;
+      const token = res.data?.token || null;
 
-      if (!userData || !token) {
+      if (!userData) {
         setServerError("Unexpected response from server. Please try again.");
         return;
       }
@@ -57,9 +57,12 @@ export default function Login() {
       login(userData, token);
       navigate(userData.role === "admin" ? "/dashboard" : "/profile");
     } catch (err) {
-      setServerError(
-        err.response?.data?.message || "Login failed. Please check your credentials."
-      );
+      const errorMessage =
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Login failed. Please check your credentials.";
+
+      setServerError(errorMessage);
     } finally {
       setLoading(false);
     }

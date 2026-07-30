@@ -1,27 +1,3 @@
-/*
-==========================================================
-MEMBER 2 — NAOMI
-
-PAGE
-
-AUTHORS
-
-Responsibilities
-
-• Display all authors
-• Add authors
-• Edit authors
-• Delete authors
-
-Backend Routes
-
-GET /authors
-POST /authors
-PATCH /authors/:id
-DELETE /authors/:id
-
-==========================================================
-*/
 import React, { useEffect, useState } from 'react';
 import { fetchAuthors, createAuthor, deleteAuthor } from '../api/catalogApi';
 
@@ -88,7 +64,4 @@ export default function Authors() {
       </ul>
     </div>
   );
-}
-export default function Authors() {
-  return <div className="container py-4"><h2>Authors</h2></div>;
 }
