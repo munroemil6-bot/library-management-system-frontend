@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const ADMIN_LINKS = [
   { label: "Dashboard", to: "/dashboard" },
@@ -17,10 +18,17 @@ const USER_LINKS = [
 ];
 
 export default function Sidebar({ role = "user" }) {
+  const { user } = useAuth();
   const links = role === "admin" ? ADMIN_LINKS : USER_LINKS;
 
   return (
     <div className="bg-white border-end vh-100 p-3" style={{ width: 220, minWidth: 220 }}>
+      {user && (
+        <Link to="/profile" className="text-decoration-none text-dark d-block mb-3 px-2">
+          <div className="fw-semibold">{user.username}</div>
+          <div className="small text-muted">View profile</div>
+        </Link>
+      )}
       <p className="text-muted small fw-semibold text-uppercase px-2 mb-2">
         {role === "admin" ? "Admin Menu" : "Menu"}
       </p>

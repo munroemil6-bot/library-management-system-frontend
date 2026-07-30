@@ -50,9 +50,13 @@ export default function Navbar() {
             ) : (
               <>
                 <li className="nav-item">
-                  <span className="nav-link text-white-50 small">
+                  <Link
+                    className="nav-link text-white-50 small"
+                    to="/profile"
+                    onClick={() => setOpen(false)}
+                  >
                     {user.username}
-                  </span>
+                  </Link>
                 </li>
                 <li className="nav-item">
                  <Link
