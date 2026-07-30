@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
+import AdminLayout from "./layouts/AdminLayout";
+import UserLayout from "./layouts/UserLayout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
@@ -15,6 +16,29 @@ import BorrowBooks from "./pages/BorrowBooks";
 import MyBorrowedBooks from "./pages/MyBorrowedBooks";
 import NotFound from "./pages/NotFound";
 
+function AppShell({ children }) {
+  const { user } = useAuth();
+  const Layout = user?.role === "admin" ? AdminLayout : UserLayout;
+  return <Layout>{children}</Layout>;
+}
+
+function HomeRedirect() {
+  const { user } = useAuth();
+
+  if (!user) return <Navigate to="/login" replace />;
+  return <Navigate to={user.role === "admin" ? "/dashboard" : "/profile"} replace />;
+}
+
+function PublicRoute({ children }) {
+  const { user } = useAuth();
+
+  if (user) {
+    return <Navigate to={user.role === "admin" ? "/dashboard" : "/profile"} replace />;
+  }
+
+  return children;
+}
+
 export default function App() {
   return (
     <AuthProvider>
@@ -24,20 +48,105 @@ export default function App() {
           <main className="flex-grow-1">
             <Routes>
               {/* Public */}
-              <Route path="/" element={<Navigate to="/login" replace />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/" element={<HomeRedirect />} />
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
+              
+              {/* Protected — any logged-in user */}
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <AppShell>
+                      <Profile />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/borrow-books"
+                element={
+                  <ProtectedRoute>
+                    <AppShell>
+                      <BorrowBooks />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-borrowed-books"
+                element={
+                  <ProtectedRoute>
+                    <AppShell>
+                      <MyBorrowedBooks />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+             />
 
               {/* Protected — any logged-in user */}
-              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              <Route path="/books" element={<ProtectedRoute><Books /></ProtectedRoute>} />
-              <Route path="/borrow" element={<ProtectedRoute><BorrowBooks /></ProtectedRoute>} />
-              <Route path="/my-borrowed" element={<ProtectedRoute><MyBorrowedBooks /></ProtectedRoute>} />
+              <Route
+                path="/books"
+                element={
+                  <ProtectedRoute>
+                    <AppShell>
+                      <Books />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/borrow"
+                element={
+                  <ProtectedRoute>
+                    <AppShell>
+                      <BorrowBooks />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/my-borrowed"
+                element={
+                  <ProtectedRoute>
+                    <AppShell>
+                      <MyBorrowedBooks />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Protected — admin only */}
-              <Route path="/dashboard" element={<ProtectedRoute adminOnly><Dashboard /></ProtectedRoute>} />
-              <Route path="/authors" element={<ProtectedRoute adminOnly><Authors /></ProtectedRoute>} />
-              <Route path="/categories" element={<ProtectedRoute adminOnly><Categories /></ProtectedRoute>} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AppShell>
+                      <Dashboard />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/authors"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AppShell>
+                      <Authors />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/categories"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <AppShell>
+                      <Categories />
+                    </AppShell>
+                  </ProtectedRoute>
+                }
+              />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

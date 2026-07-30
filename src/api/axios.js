@@ -5,6 +5,11 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
   timeout: 15000, // 15s timeout — prevents hanging requests
+    baseURL: import.meta.env.VITE_API_URL || "https://library-management-system-backend-91dw.onrender.com/api",
+    withCredentials: true,
+    headers: {
+        "Content-Type": "application/json",
+    },
 });
 
 // Response interceptor — handle session expiry and network failures globally

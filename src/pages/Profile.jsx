@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
 import Loader from "../components/Loader";
-import UserLayout from "../layouts/UserLayout";
 
 export default function Profile() {
   const { user, login, logout } = useAuth();
@@ -250,6 +249,5 @@ export default function Profile() {
         </div>
 
       </div>
-    </UserLayout>
   );
 }

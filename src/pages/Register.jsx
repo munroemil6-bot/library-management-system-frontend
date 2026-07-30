@@ -12,26 +12,13 @@ export default function Register() {
 
   const validate = () => {
     const errs = {};
-    if (!form.username.trim()) {
-      errs.username = "Username is required.";
-    } else if (form.username.trim().length < 3) {
-      errs.username = "Username must be at least 3 characters.";
-    }
-    if (!form.email.trim()) {
-      errs.email = "Email is required.";
-    } else if (!/\S+@\S+\.\S+/.test(form.email)) {
-      errs.email = "Enter a valid email address.";
-    }
-    if (!form.pwd) {
-      errs.pwd = "Password is required.";
-    } else if (form.pwd.length < 8) {
-      errs.pwd = "Password must be at least 8 characters.";
-    }
-    if (!form.confirmPwd) {
-      errs.confirmPwd = "Please confirm your password.";
-    } else if (form.pwd !== form.confirmPwd) {
-      errs.confirmPwd = "Passwords do not match.";
-    }
+    if (!form.username) errs.username = "Username is required.";
+    if (!form.email) errs.email = "Email is required.";
+    else if (!/\S+@\S+\.\S+/.test(form.email)) errs.email = "Enter a valid email.";
+    if (!form.pwd) errs.pwd = "Password is required.";
+    else if (form.pwd.length < 8) errs.pwd = "Password must be at least 8 characters.";
+    if (!form.confirmPwd) errs.confirmPwd = "Please confirm your password.";
+    else if (form.pwd !== form.confirmPwd) errs.confirmPwd = "Passwords do not match.";
     return errs;
   };
 
@@ -49,8 +36,8 @@ export default function Register() {
     setLoading(true);
     try {
       await api.post("/register", {
-        username: form.username.trim(),
-        email: form.email.trim(),
+        username: form.username,
+        email: form.email,
         password: form.pwd,
         password_confirmation: form.confirmPwd,
       });
@@ -60,7 +47,7 @@ export default function Register() {
       if (data?.errors && typeof data.errors === "object") {
         setErrors(data.errors);
       } else {
-        setServerError(data?.message || "Registration failed. Please try again.");
+        setServerError(data?.message || data?.error || "Registration failed. Please try again.");
       }
     } finally {
       setLoading(false);

@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const ADMIN_LINKS = [
   { label: "Dashboard",     to: "/dashboard", icon: "bi bi-speedometer2" },
@@ -17,6 +18,7 @@ const USER_LINKS = [
 ];
 
 export default function Sidebar({ role = "user" }) {
+  const { user } = useAuth();
   const links = role === "admin" ? ADMIN_LINKS : USER_LINKS;
 
   return (

@@ -74,7 +74,7 @@ export default function Navbar() {
                   </div>
                   <span className="small fw-medium" style={{ color: "#e2e8f0" }}>
                     {user.username}
-                  </span>
+                  </Link>
                 </li>
                 <li className="nav-item">
                  <Link

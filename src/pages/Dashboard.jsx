@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import api from "../api/axios";
 import Loader from "../components/Loader";
-import AdminLayout from "../layouts/AdminLayout";
 
 const NAV_CARDS = [
   { label: "Books",          to: "/books",      description: "Add, edit or remove books",       icon: "bi bi-book",              bg: "#eff6ff", color: "#2563eb" },
@@ -127,6 +126,5 @@ export default function Dashboard() {
         </div>
 
       </div>
-    </AdminLayout>
   );
 }
