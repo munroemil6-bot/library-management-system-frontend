@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -12,34 +14,40 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Routes>
-          {/* Public */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+        <div className="d-flex flex-column min-vh-100">
+          <Navbar />
+          <main className="flex-grow-1">
+            <Routes>
+              {/* Public */}
+              <Route path="/" element={<Navigate to="/login" replace />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-          {/* Protected — any logged-in user */}
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
+              {/* Protected — any logged-in user */}
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
 
-          {/* Protected — admin only */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute adminOnly>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+              {/* Protected — admin only */}
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute adminOnly>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </BrowserRouter>
     </AuthProvider>
   );
