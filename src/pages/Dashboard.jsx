@@ -5,18 +5,18 @@ import api from "../api/axios";
 import Loader from "../components/Loader";
 
 const NAV_CARDS = [
-  { label: "Manage Books", to: "/admin/books", description: "Add, edit or remove books" },
-  { label: "Manage Authors", to: "/admin/authors", description: "Manage author records" },
-  { label: "Manage Categories", to: "/admin/categories", description: "Organise book categories" },
-  { label: "Borrow Records", to: "/admin/borrows", description: "View all borrow activity" },
-  { label: "Manage Users", to: "/admin/users", description: "View and manage user accounts" },
+  { label: "Books",          to: "/books",      description: "Add, edit or remove books",       icon: "bi bi-book",              bg: "#eff6ff", color: "#2563eb" },
+  { label: "Authors",        to: "/authors",    description: "Manage author records",            icon: "bi bi-person-lines-fill", bg: "#f0fdf4", color: "#16a34a" },
+  { label: "Categories",     to: "/categories", description: "Organise book categories",         icon: "bi bi-tag",               bg: "#fefce8", color: "#ca8a04" },
+  { label: "Borrow Records", to: "/borrow",     description: "View all borrow activity",         icon: "bi bi-arrow-left-right",  bg: "#fdf4ff", color: "#9333ea" },
+  { label: "Profile",        to: "/profile",    description: "View and edit your account",       icon: "bi bi-person-circle",     bg: "#fff7ed", color: "#ea580c" },
 ];
 
 const STAT_CONFIG = [
-  { key: "total_books", label: "Total Books", color: "primary" },
-  { key: "total_users", label: "Total Users", color: "success" },
-  { key: "active_borrows", label: "Active Borrows", color: "warning" },
-  { key: "overdue", label: "Overdue", color: "danger" },
+  { key: "total_books",    label: "Total Books",    icon: "bi bi-book-fill",          gradient: "linear-gradient(135deg, #2563eb, #1d4ed8)" },
+  { key: "total_users",    label: "Total Users",    icon: "bi bi-people-fill",        gradient: "linear-gradient(135deg, #16a34a, #15803d)" },
+  { key: "active_borrows", label: "Active Borrows", icon: "bi bi-bookmark-fill",      gradient: "linear-gradient(135deg, #d97706, #b45309)" },
+  { key: "overdue",        label: "Overdue",        icon: "bi bi-exclamation-circle-fill", gradient: "linear-gradient(135deg, #dc2626, #b91c1c)" },
 ];
 
 export default function Dashboard() {
@@ -26,8 +26,7 @@ export default function Dashboard() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    api
-      .get("/dashboard/stats")
+    api.get("/dashboard/stats")
       .then((res) => {
         if (res.data && typeof res.data === "object") {
           setStats(res.data);
@@ -35,34 +34,37 @@ export default function Dashboard() {
           setError("Invalid data received from server.");
         }
       })
-      .catch(() => {
-        setError("Failed to load statistics. Please refresh the page.");
-      })
+      .catch(() => setError("Failed to load statistics. Please refresh the page."))
       .finally(() => setLoading(false));
   }, []);
 
   return (
-      <div className="container-fluid">
+    <AdminLayout>
+      <div className="p-4" style={{ maxWidth: 1100 }}>
 
-        {/* Page Header */}
-        <div className="mb-4">
-          <h2 className="fw-bold text-dark mb-1">Admin Dashboard</h2>
+        {/* Header */}
+        <div className="mb-5">
+          <h2 className="fw-bold mb-1" style={{ color: "#1e293b", fontSize: "1.6rem" }}>
+            Admin Dashboard
+          </h2>
           {user?.username && (
-            <p className="text-muted mb-0">
-              Welcome back, <span className="fw-medium">{user.username}</span>
+            <p className="mb-0" style={{ color: "#64748b" }}>
+              Welcome back, <span className="fw-semibold" style={{ color: "#2563eb" }}>{user.username}</span>
             </p>
           )}
         </div>
 
-        {/* Statistics Section */}
+        {/* Stats */}
         <div className="mb-5">
-          <h5 className="fw-semibold text-dark mb-3">System Statistics</h5>
+          <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
+            System Overview
+          </p>
 
           {loading && <Loader message="Loading statistics..." />}
 
           {!loading && error && (
-            <div className="alert alert-warning d-flex align-items-center" role="alert">
-              <span>{error}</span>
+            <div className="alert alert-warning d-flex align-items-center py-2" role="alert">
+              <span className="small">{error}</span>
               <button
                 type="button"
                 className="btn btn-sm btn-outline-warning ms-auto"
@@ -73,21 +75,21 @@ export default function Dashboard() {
             </div>
           )}
 
-          {!loading && !error && !stats && (
-            <p className="text-muted">No statistics available.</p>
-          )}
-
-          {!loading && !error && stats && (
+          {!loading && !error && (
             <div className="row g-3">
               {STAT_CONFIG.map((item) => (
-                <div className="col-6 col-md-3" key={item.key}>
-                  <div className={`card border-0 text-white bg-${item.color} shadow-sm h-100`}>
-                    <div className="card-body p-3">
-                      <p className="card-text small mb-1 opacity-75">{item.label}</p>
-                      <h2 className="fw-bold mb-0">
-                        {stats[item.key] ?? "—"}
-                      </h2>
+                <div className="col-6 col-lg-3" key={item.key}>
+                  <div
+                    className="stat-card h-100"
+                    style={{ background: item.gradient }}
+                  >
+                    <div className="d-flex align-items-center justify-content-between mb-3">
+                      <p className="mb-0 small fw-medium" style={{ opacity: 0.85 }}>{item.label}</p>
+                      <i className={item.icon} style={{ fontSize: "1.1rem", opacity: 0.7 }} />
                     </div>
+                    <h2 className="fw-bold mb-0" style={{ fontSize: "2rem" }}>
+                      {stats ? (stats[item.key] ?? "—") : "—"}
+                    </h2>
                   </div>
                 </div>
               ))}
@@ -95,21 +97,27 @@ export default function Dashboard() {
           )}
         </div>
 
-        {/* Quick Actions Section */}
+        {/* Quick Actions */}
         <div>
-          <h5 className="fw-semibold text-dark mb-3">Quick Actions</h5>
+          <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
+            Quick Actions
+          </p>
           <div className="row g-3">
             {NAV_CARDS.map((card) => (
               <div className="col-12 col-sm-6 col-lg-4" key={card.to}>
                 <Link to={card.to} className="text-decoration-none">
-                  <div className="card border-0 shadow-sm h-100 rounded-3 card-hover">
-                    <div className="card-body p-4">
-                      <h6 className="fw-semibold text-dark mb-1">{card.label}</h6>
-                      <p className="text-muted small mb-0">{card.description}</p>
+                  <div className="action-card p-4 h-100">
+                    <div
+                      className="action-icon"
+                      style={{ background: card.bg, color: card.color }}
+                    >
+                      <i className={card.icon} />
                     </div>
-                    <div className="card-footer bg-transparent border-top-0 px-4 pb-3">
-                      <span className="text-primary small fw-medium">Go to {card.label} &rarr;</span>
-                    </div>
+                    <h6 className="fw-semibold mb-1" style={{ color: "#1e293b" }}>{card.label}</h6>
+                    <p className="small mb-2" style={{ color: "#64748b" }}>{card.description}</p>
+                    <span className="small fw-semibold" style={{ color: card.color }}>
+                      Open {card.label} &rarr;
+                    </span>
                   </div>
                 </Link>
               </div>
