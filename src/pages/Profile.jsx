@@ -94,8 +94,11 @@ export default function Profile() {
           style={{ background: "linear-gradient(135deg, #1e293b, #1e3a5f)", color: "#fff" }}
         >
           <div className="d-flex align-items-center gap-3">
-            <div className="avatar-lg">
-              {user.username?.charAt(0).toUpperCase()}
+            <div
+              className="d-flex align-items-center justify-content-center rounded-3"
+              style={{ width: 48, height: 48, background: "rgba(255,255,255,0.14)", fontSize: "1.1rem" }}
+            >
+              <i className="bi bi-person-circle" />
             </div>
             <div>
               <h5 className="mb-1 fw-bold">{user.username}</h5>
