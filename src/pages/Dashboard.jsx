@@ -51,47 +51,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      <div className="mb-4">
-        <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
-          System Overview
-        </p>
-
-        {loading && <Loader message="Loading statistics..." />}
-
-        {!loading && error && (
-          <div className="alert alert-warning d-flex align-items-center py-2" role="alert">
-            <span className="small">{error}</span>
-            <button
-              type="button"
-              className="btn btn-sm btn-outline-warning ms-auto"
-              onClick={() => window.location.reload()}
-            >
-              Retry
-            </button>
-          </div>
-        )}
-
-        {!loading && !error && (
-          <div className="row g-3">
-            {STAT_CONFIG.map((item) => (
-              <div className="col-6 col-lg-3" key={item.key}>
-                <div className="card border-0 h-100" style={{ boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)" }}>
-                  <div className="card-body p-3">
-                    <div className="d-flex align-items-center justify-content-between mb-2">
-                      <p className="mb-0 small fw-medium" style={{ color: "#64748b" }}>{item.label}</p>
-                      <i className={item.icon} style={{ fontSize: "1rem", color: "#2563eb" }} />
-                    </div>
-                    <h3 className="fw-bold mb-0" style={{ color: "#1e293b" }}>
-                      {stats ? (stats[item.key] ?? "—") : "—"}
-                    </h3>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
       <div>
         <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
           Quick Actions
