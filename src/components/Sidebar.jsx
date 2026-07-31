@@ -35,7 +35,6 @@ export default function Sidebar({ role = "user" }) {
                 `sidebar-link${isActive ? " active" : ""}`
               }
             >
-              <i className={link.icon} style={{ fontSize: "1rem", width: 18 }} />
               {link.label}
             </NavLink>
           </li>
