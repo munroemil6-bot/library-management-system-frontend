@@ -387,12 +387,13 @@ Responsibilities included:
 
 Responsibilities included:
 
-- User Registration page.
+User Registration page.
 - User Login page.
 - Authentication forms.
 - Dashboard after successful login.
 - Protected route implementation.
 - Authentication API integration.
+
 
 ---
 
