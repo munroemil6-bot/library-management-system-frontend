@@ -1,77 +1,339 @@
-
 # BookBarn Frontend
 
-React + Vite library management app.
+BookBarn is a modern, responsive web application developed as the frontend of a Smart Library Management System. The application provides an intuitive interface for students, librarians and administrators to interact with the BookBarn backend through RESTful APIs.
 
-## Overview
+The frontend was built using **React** and **Vite**, allowing for a fast, component-based and scalable application. It communicates with the Flask backend using Axios and provides a seamless user experience for managing books, users and borrowing records.
 
-BookBarn Frontend is a modern, responsive web application that connects to a Flask REST API backend. It provides users with an intuitive interface for browsing books, managing borrowings, and tracking library activity.
+The project was developed collaboratively by a team of four software engineering students, with each member responsible for a specific module of the application while maintaining a consistent architecture throughout the project.
 
 ---
 
-## Tech Stack
-React 19, Vite, React Router, Axios, Bootstrap, Context API
+# Project Overview
 
-## Quick Start
-```bash
-git clone <repository-url>
-cd frontend
-npm install
-npm run dev
-Structure
-text
+BookBarn aims to modernize traditional library operations by replacing manual processes with a digital platform that is efficient, secure and easy to use.
+
+The application allows users to:
+
+- Register for a library account
+- Log into their account securely
+- Browse available books
+- Search books by different criteria
+- Borrow available books
+- Return borrowed books
+- View borrowing history
+
+Administrators can:
+
+- Manage books
+- Manage authors
+- Manage categories
+- Manage registered users
+- Monitor borrowing activities
+
+The frontend consumes the backend REST API and dynamically updates information without requiring manual page refreshes.
+
+---
+
+# Problem Statement
+
+Many small libraries continue to rely on manual record keeping or outdated management systems that are difficult to maintain and inefficient for both staff and users.
+
+Common challenges include:
+
+- Difficulty tracking borrowed books
+- Slow borrowing and return processes
+- Poor organization of book records
+- Limited accessibility
+- Time-consuming administrative tasks
+- Increased risk of losing important records
+
+BookBarn provides a modern web-based solution that simplifies these operations while improving accessibility, efficiency and user experience.
+
+---
+
+# Project Objectives
+
+The frontend was developed with the following objectives:
+
+## General Objectives
+
+- Build a modern user interface using React
+- Consume RESTful APIs from the Flask backend
+- Create reusable React components
+- Implement responsive layouts
+- Improve user experience
+- Maintain clean and organized code
+
+## Technical Objectives
+
+- Learn component-based development
+- Practice React Router navigation
+- Consume APIs using Axios
+- Handle authentication
+- Build reusable layouts
+- Collaborate using Git and GitHub
+- Deploy a production-ready frontend
+
+---
+
+# Features
+
+BookBarn currently supports the following features.
+
+## Authentication
+
+- User Registration
+- Secure Login
+- Logout
+- Protected Routes
+- Session Management
+
+---
+
+## Library Management
+
+- Browse Books
+- View Authors
+- View Categories
+- Search Library Resources
+- Book Details
+
+---
+
+## Borrowing System
+
+- Borrow Books
+- Return Books
+- View Borrowing History
+- Track Borrow Status
+
+---
+
+## Administration
+
+- Dashboard
+- Book Management
+- Author Management
+- Category Management
+- User Management
+
+---
+
+# Technologies Used
+
+The frontend was developed using modern web development technologies.
+
+## Frontend Framework
+
+- React
+
+React was chosen because it promotes reusable components, faster development and easier maintenance.
+
+---
+
+## Build Tool
+
+- Vite
+
+Vite provides faster development, instant hot reloads and optimized production builds.
+
+---
+
+## Routing
+
+- React Router DOM
+
+Used to create navigation between pages while maintaining a single-page application experience.
+
+---
+
+## HTTP Client
+
+- Axios
+
+Axios is responsible for communicating with the Flask backend REST API.
+
+All API requests are centralized to make maintenance easier.
+
+---
+
+## Styling
+
+- Bootstrap
+- Custom CSS
+
+Bootstrap provides responsive layouts while custom CSS allows additional styling and branding.
+
+---
+
+## Version Control
+
+- Git
+- GitHub
+
+Used for collaborative development and version management.
+
+---
+
+## Deployment
+
+Frontend Deployment
+
+- Vercel
+
+Backend Deployment
+
+- Flask API deployed separately
+
+---
+
+# Frontend Folder Structure
+
+```
+
 src/
-├── api/          # API services
-├── components/   # Reusable UI
-├── context/      # Auth context
-├── layouts/      # Page layouts
-├── pages/        # All pages
-├── App.jsx
-└── main.jsx
+│
+├── api/
+│ └── axios.js
+│
+├── assets/
+│ ├── images/
+│ ├── icons/
+│ └── styles/
+│
+├── components/
+│ ├── Navbar.jsx
+│ ├── Footer.jsx
+│ ├── Sidebar.jsx
+│ ├── BookCard.jsx
+│ ├── SearchBar.jsx
+│ ├── ProtectedRoute.jsx
+│ └── Loader.jsx
+│
+├── context/
+│ └── AuthContext.jsx
+│
+├── hooks/
+│ └── useAuth.js
+│
+├── layouts/
+│ ├── MainLayout.jsx
+│ └── DashboardLayout.jsx
+│
 ├── pages/
-│   ├── Home.jsx
-│   ├── Books.jsx
-│   ├── BookDetails.jsx
-│   ├── Login.jsx
-│   ├── Register.jsx
-│   ├── Dashboard.jsx
-│   ├── BorrowHistory.jsx
-│   ├── Profile.jsx
-│   ├── ManageBooks.jsx
-│   ├── ManageAuthors.jsx
-│   ├── ManageCategories.jsx
-│   └── ManageUsers.jsx
+│ │
+│ ├── authentication/
+│ │ ├── Login.jsx
+│ │ └── Register.jsx
+│ │
+│ ├── dashboard/
+│ │ └── Dashboard.jsx
+│ │
+│ ├── books/
+│ │ ├── Books.jsx
+│ │ ├── Authors.jsx
+│ │ └── Categories.jsx
+│ │
+│ ├── borrowing/
+│ │ ├── BorrowBooks.jsx
+│ │ ├── ReturnBooks.jsx
+│ │ └── BorrowHistory.jsx
+│ │
+│ ├── admin/
+│ │ ├── ManageBooks.jsx
+│ │ ├── ManageAuthors.jsx
+│ │ ├── ManageCategories.jsx
+│ │ └── ManageUsers.jsx
+│ │
+│ ├── Home.jsx
+│ ├── About.jsx
+│ ├── Contact.jsx
+│ └── NotFound.jsx
+│
 ├── App.jsx
-└── main.js
+├── main.jsx
+└── index.css
 
-Protected: Dashboard, Borrow History, Profile
+```
 
-Admin: Manage Books/Authors/Categories/Borrow Records/Users
+---
 
-Features
-Authentication (JWT)
+# Folder Responsibilities
 
-Book browsing & search
+### api/
 
-Borrow/Return books
+Contains the Axios configuration used throughout the application to communicate with the deployed backend.
 
-User & Admin dashboards
+---
 
-Responsive design
+### assets/
 
-Commands
-bash
-npm install          # Install deps
-npm run dev          # Dev server
-npm run build        # Build
-npm run preview      # Preview build
-Deployment
-Docker, Docker Hub, or Render
+Stores images, icons, logos and additional styling resources used throughout the application.
 
-Browser Support
-Chrome (latest)
+---
 
-License
-MIT
+### components/
 
+Contains reusable React components shared across multiple pages.
 
+Examples include:
+
+- Navigation Bar
+- Footer
+- Sidebar
+- Cards
+- Buttons
+- Search Bars
+- Loaders
+
+---
+
+### layouts/
+
+Provides reusable page layouts that ensure consistency across the application.
+
+Examples include:
+
+- Public Layout
+- Dashboard Layout
+
+---
+
+### pages/
+
+Contains the main application pages grouped according to their functionality.
+
+Each folder represents one major feature of the application.
+
+---
+
+### context/
+
+Stores React Context providers used for global application state such as authentication.
+
+---
+
+### hooks/
+
+Contains reusable custom React hooks that simplify application logic and improve code reusability.
+
+---
+
+# Frontend Design Principles
+
+The BookBarn frontend was designed following several software engineering principles.
+
+These include:
+
+- Reusable Components
+- Separation of Concerns
+- Clean Folder Organization
+- Responsive Design
+- Maintainable Code
+- Consistent User Experience
+- RESTful API Integration
+- Scalability for Future Development
+
+Every page and component was designed to be independent while working together as part of a complete application.
+
+---
