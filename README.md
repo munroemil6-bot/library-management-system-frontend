@@ -1,64 +1,55 @@
-React + Vite library management application for BookBarn.
 
-Tech Stack
-React 19
+# BookBarn Frontend
 
-Vite
+React + Vite library management app.
 
-React Router
+## Tech Stack
+React 19, Vite, React Router, Axios, Bootstrap, Context API
 
-Axios
-
-Bootstrap
-
-Context API
-
-Quick Start
-bash
-# Clone and install
+## Quick Start
+```bash
 git clone <repository-url>
 cd frontend
 npm install
-
-# Run development server
 npm run dev
-Project Structure
+Structure
 text
 src/
-├── api/          # Axios configuration & API services
-├── components/   # Reusable UI components
-├── context/      # Authentication context
-├── hooks/        # Custom React hooks
+├── api/          # API services
+├── components/   # Reusable UI
+├── context/      # Auth context
 ├── layouts/      # Page layouts
-├── pages/        # All application pages
-└── App.jsx       # Main app component
+├── pages/        # All pages
+├── App.jsx
+└── main.jsx
 Pages
 Public: Home, Books, Book Details, Login, Register, About, Contact
 
 Protected: Dashboard, Borrow History, Profile
 
-Admin: Dashboard, Manage Books/Authors/Categories/Borrow Records/Users
+Admin: Manage Books/Authors/Categories/Borrow Records/Users
 
-Development Phases
-Setup React + Vite project
+Features
+Authentication (JWT)
 
-Authentication (Login/Register, Protected Routes)
+Book browsing & search
 
-Books (Listing, Details, Search, Filters)
+Borrow/Return books
 
-Borrowing (Borrow/Return, History)
+User & Admin dashboards
 
-Dashboard (User & Admin views)
+Responsive design
 
-API Integration
-
-Responsive Design
-
+Commands
+bash
+npm install          # Install deps
+npm run dev          # Dev server
+npm run build        # Build
+npm run preview      # Preview build
 Deployment
-
-Deployment
-Deploy using Docker, Docker Hub, or Render.
+Docker, Docker Hub, or Render
 
 License
 MIT
+
 
