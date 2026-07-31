@@ -336,4 +336,90 @@ These include:
 
 Every page and component was designed to be independent while working together as part of a complete application.
 
+# Team Responsibilities
+
+BookBarn was developed collaboratively by a team of four members. Each member was assigned a specific module of the frontend to encourage teamwork while allowing everyone to contribute meaningfully to the project.
+
+The project manager was responsible for planning the architecture, organizing the project structure, coordinating development, integrating each member's work, testing the application and managing deployment.
+
+---
+
+## Myles Munroe
+*Project Manager & Frontend Lead*
+
+Responsibilities included:
+
+- Planned the overall frontend architecture.
+- Designed and organized the project folder structure.
+- Created reusable layouts.
+- Configured React Router navigation.
+- Configured Axios for backend communication.
+- Integrated all team members' work into a single application.
+- Fixed merge conflicts.
+- Tested frontend functionality.
+- Connected the frontend to the deployed Flask backend.
+- Managed deployment to Vercel.
+- Reviewed pull requests and coordinated GitHub collaboration.
+
+---
+---
+## Myles Munroe
+*Project Manager & Frontend Lead*
+
+Responsibilities included:
+
+- Planned the overall frontend architecture.
+- Designed and organized the project folder structure.
+- Created reusable layouts.
+- Configured React Router navigation.
+- Configured Axios for backend communication.
+- Integrated all team members' work into a single application.
+- Fixed merge conflicts.
+- Tested frontend functionality.
+- Connected the frontend to the deployed Flask backend.
+- Managed deployment to Vercel.
+- Reviewed pull requests and coordinated GitHub collaboration.
+
+---
+
+## Mason
+*Authentication Module*
+
+Responsibilities included:
+
+- User Registration page.
+- User Login page.
+- Authentication forms.
+- Dashboard after successful login.
+- Protected route implementation.
+- Authentication API integration.
+
+---
+
+## Naomi
+*Library Management Module*
+
+Responsibilities included:
+
+- Books pages.
+- Authors pages.
+- Categories pages.
+- Search functionality.
+- Displaying library resources.
+- CRUD interface for library resources.
+
+---
+
+## Nassra
+*Borrowing Module*
+
+Responsibilities included:
+
+- Borrow books page.
+- Return books page.
+- Borrow history page.
+- Borrowing workflow.
+- Borrow record API integration.
+- Display of borrowed books and return status.
+
 ---
