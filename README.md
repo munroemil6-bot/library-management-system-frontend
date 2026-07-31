@@ -3,6 +3,12 @@
 
 React + Vite library management app.
 
+## Overview
+
+BookBarn Frontend is a modern, responsive web application that connects to a Flask REST API backend. It provides users with an intuitive interface for browsing books, managing borrowings, and tracking library activity.
+
+---
+
 ## Tech Stack
 React 19, Vite, React Router, Axios, Bootstrap, Context API
 
@@ -22,8 +28,21 @@ src/
 ├── pages/        # All pages
 ├── App.jsx
 └── main.jsx
-Pages
-Public: Home, Books, Book Details, Login, Register, About, Contact
+├── pages/
+│   ├── Home.jsx
+│   ├── Books.jsx
+│   ├── BookDetails.jsx
+│   ├── Login.jsx
+│   ├── Register.jsx
+│   ├── Dashboard.jsx
+│   ├── BorrowHistory.jsx
+│   ├── Profile.jsx
+│   ├── ManageBooks.jsx
+│   ├── ManageAuthors.jsx
+│   ├── ManageCategories.jsx
+│   └── ManageUsers.jsx
+├── App.jsx
+└── main.js
 
 Protected: Dashboard, Borrow History, Profile
 
@@ -48,6 +67,9 @@ npm run build        # Build
 npm run preview      # Preview build
 Deployment
 Docker, Docker Hub, or Render
+
+Browser Support
+Chrome (latest)
 
 License
 MIT
