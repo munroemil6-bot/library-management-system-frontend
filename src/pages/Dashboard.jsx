@@ -39,76 +39,72 @@ export default function Dashboard() {
   }, []);
 
   return (
-      <div className="p-4" style={{ maxWidth: 1100 }}>
-
-        {/* Header */}
-        <div className="mb-5">
-          <h2 className="fw-bold mb-1" style={{ color: "#1e293b", fontSize: "1.6rem" }}>
-            Admin Dashboard
-          </h2>
-          {user?.username && (
-            <p className="mb-0" style={{ color: "#64748b" }}>
-              Welcome back, <span className="fw-semibold" style={{ color: "#2563eb" }}>{user.username}</span>
-            </p>
-          )}
-        </div>
-
-        {/* Stats */}
-        <div className="mb-5">
-          <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
-            System Overview
+    <div className="p-4" style={{ maxWidth: 1100 }}>
+      <div className="mb-4">
+        <h2 className="fw-bold mb-1" style={{ color: "#1e293b", fontSize: "1.6rem" }}>
+          Admin Dashboard
+        </h2>
+        {user?.username && (
+          <p className="mb-0" style={{ color: "#64748b" }}>
+            Welcome back, <span className="fw-semibold" style={{ color: "#2563eb" }}>{user.username}</span>
           </p>
+        )}
+      </div>
 
-          {loading && <Loader message="Loading statistics..." />}
+      <div className="mb-4">
+        <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
+          System Overview
+        </p>
 
-          {!loading && error && (
-            <div className="alert alert-warning d-flex align-items-center py-2" role="alert">
-              <span className="small">{error}</span>
-              <button
-                type="button"
-                className="btn btn-sm btn-outline-warning ms-auto"
-                onClick={() => window.location.reload()}
-              >
-                Retry
-              </button>
-            </div>
-          )}
+        {loading && <Loader message="Loading statistics..." />}
 
-          {!loading && !error && (
-            <div className="row g-3">
-              {STAT_CONFIG.map((item) => (
-                <div className="col-6 col-lg-3" key={item.key}>
-                  <div
-                    className="stat-card h-100"
-                    style={{ background: item.gradient }}
-                  >
-                    <div className="d-flex align-items-center justify-content-between mb-3">
-                      <p className="mb-0 small fw-medium" style={{ opacity: 0.85 }}>{item.label}</p>
-                      <i className={item.icon} style={{ fontSize: "1.1rem", opacity: 0.7 }} />
+        {!loading && error && (
+          <div className="alert alert-warning d-flex align-items-center py-2" role="alert">
+            <span className="small">{error}</span>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-warning ms-auto"
+              onClick={() => window.location.reload()}
+            >
+              Retry
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && (
+          <div className="row g-3">
+            {STAT_CONFIG.map((item) => (
+              <div className="col-6 col-lg-3" key={item.key}>
+                <div className="card border-0 h-100" style={{ boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)" }}>
+                  <div className="card-body p-3">
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                      <p className="mb-0 small fw-medium" style={{ color: "#64748b" }}>{item.label}</p>
+                      <i className={item.icon} style={{ fontSize: "1rem", color: "#2563eb" }} />
                     </div>
-                    <h2 className="fw-bold mb-0" style={{ fontSize: "2rem" }}>
+                    <h3 className="fw-bold mb-0" style={{ color: "#1e293b" }}>
                       {stats ? (stats[item.key] ?? "—") : "—"}
-                    </h2>
+                    </h3>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-        {/* Quick Actions */}
-        <div>
-          <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
-            Quick Actions
-          </p>
-          <div className="row g-3">
-            {NAV_CARDS.map((card) => (
-              <div className="col-12 col-sm-6 col-lg-4" key={card.to}>
-                <Link to={card.to} className="text-decoration-none">
-                  <div className="action-card p-4 h-100">
+      <div>
+        <p className="fw-semibold mb-3 text-uppercase" style={{ fontSize: "0.7rem", letterSpacing: "0.1em", color: "#94a3b8" }}>
+          Quick Actions
+        </p>
+        <div className="row g-3">
+          {NAV_CARDS.map((card) => (
+            <div className="col-12 col-sm-6 col-lg-4" key={card.to}>
+              <Link to={card.to} className="text-decoration-none">
+                <div className="card border-0 h-100" style={{ boxShadow: "0 8px 24px rgba(15, 23, 42, 0.08)" }}>
+                  <div className="card-body p-4">
                     <div
-                      className="action-icon"
-                      style={{ background: card.bg, color: card.color }}
+                      className="d-inline-flex align-items-center justify-content-center rounded-3 mb-3"
+                      style={{ width: 44, height: 44, background: card.bg, color: card.color }}
                     >
                       <i className={card.icon} />
                     </div>
@@ -118,12 +114,12 @@ export default function Dashboard() {
                       Open {card.label} &rarr;
                     </span>
                   </div>
-                </Link>
-              </div>
-            ))}
-          </div>
+                </div>
+              </Link>
+            </div>
+          ))}
         </div>
-
       </div>
-    );
+    </div>
+  );
 }
